@@ -1,0 +1,54 @@
+group 'eway-time'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.8'
+
+    compile 'io.vertx:vertx-web:3.3.3'
+    compile 'io.vertx:vertx-auth-common:3.3.3'
+    compile 'io.vertx:vertx-auth-shiro:3.3.3'
+    compile 'io.vertx:vertx-auth-jwt:3.3.3'
+
+    compile group: 'org.mongodb', name: 'mongodb-driver-async', version: '3.4.2'
+
+    compile 'ch.qos.logback:logback-core:1.1.8'
+    compile 'ch.qos.logback:logback-classic:1.1.8'
+
+    compile 'com.fasterxml.jackson.core:jackson-core:2.8.6'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.6'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.8.6'
+    compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.8.6'
+    compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.8.6'
+    compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-smile:2.8.6'
+
+    compile 'org.apache.commons:commons-lang3:3.5'
+    compile 'commons-io:commons-io:2.5'
+    compile 'commons-codec:commons-codec:1.10'
+    compile 'commons-net:commons-net:3.3'
+    compile 'commons-validator:commons-validator:1.5.1'
+    compile 'com.getsentry.raven:raven-logback:7.8.2'
+    compile group: 'io.dropwizard.metrics', name: 'metrics-healthchecks', version: '3.2.2'
+    
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+    testCompile 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:1.50.5'
+}
+
+mainClassName = 'app.Runner'
+
+applicationDefaultJvmArgs = [
+        "-Duser.dir=MY_APP_HOME",
+        "-Dvertx.cwd=MY_APP_HOME",
+        "-Dvertx.logger-delegate-factory-class-name=io.vertx.core.logging.SLF4JLogDelegateFactory",
+        "-Dlogback.configurationFile=MY_APP_HOME/conf/logback.groovy",
+        "-Xmx512m"
+]

@@ -1,0 +1,8 @@
+http.port: 8881
+jwt_auth_config1:
+  keyStore:
+    type: jceks
+    path: keystore.jceks
+    password: quannt
+jwt_auth_config2:
+  public-key: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiC8dAus9jd41rqqWtOxupusdsxXNE5tsPraqytapinq2HVYg71ImR+nBqga5cAd05gbhruU7NMwjgxndQNQ9q/twkgW5uo/XyRJ3BsQUikg6LfDZH6MaUkuzw8QvEC91042nArBCYF6l87wmqoeq4FOuHlAGqcTFbSSMBo0u8yJ3ZWVDDfmGYAzPl4zEV7/zqpkDVL2dPX/uXYokzd2gTqSZS9CKqQYJ9dXXSnzMtmSdQ0jVjE60ogdkw7QD5PFJTcTXIjAR65ywIGlBRXEPe1HvCAg3TA1hJSeHVpWVkvwgWtFxpBwLEwjADbNSpXrVwfsukBan6S7qtGdhqFrJwQIDAQAB"
