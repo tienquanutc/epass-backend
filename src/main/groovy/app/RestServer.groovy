@@ -1,6 +1,9 @@
 package app
 
 import controller.*
+import controller.Login.GET_Login
+import controller.Login.POST_ChangePassword
+import controller.Login.POST_Register
 import groovy.util.logging.Slf4j
 import io.vertx.core.http.HttpMethod
 import io.vertx.ext.web.Route
@@ -53,9 +56,7 @@ class RestServer extends VertxServer<AppConfig> {
             setCachingEnabled(false)
         })
 
-        get("/token.json") >> GET_Token
         route("/v1/*").handler(JWTAuthHandler.create(config.authProviderWithPublicKey))
-
 
         route("/v1/*").handler(CorsHandler.create("*").with {
             allowedMethods([OPTIONS, GET, POST, PUT, DELETE, PATCH] as Set<HttpMethod>)
@@ -63,9 +64,11 @@ class RestServer extends VertxServer<AppConfig> {
             allowedHeaders(['Authorization', 'Access-Control-Allow-Method', 'Access-Control-Allow-Headers', 'Content-Type'] as Set)
         })
 
-        route('/health.json').handler(new HEALTH_CHECK(config))
+        get("/login") >> GET_Login
+        post("/register") >> POST_Register
+        post("/v1/change_password") >> POST_ChangePassword
 
-        get('/v1/hello') >> GET_HelloWorld
+        route('/health.json').handler(new HEALTH_CHECK(config))
     }
 
 }

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import groovy.util.logging.Slf4j
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.auth.jwt.JWTAuth
+import mongodb.collection.UserCollection
 import org.apache.commons.lang3.Validate
 import vertx.VertxConfig
 
@@ -29,6 +30,9 @@ class AppConfig extends VertxConfig {
 
     @Lazy
     JWTAuth authProviderWithPublicKey = JWTAuth.create(vertx, jwtAuthConfig2 as JsonObject)
+
+    @JsonProperty("user.mongodb.uri")
+    UserCollection userCollection
 
 
     static AppConfig newInstance(File appConfigFile) throws IOException {

@@ -16,7 +16,6 @@ import org.apache.commons.lang3.Validate
 /**
  * Created by chipn@eway.vn on 2/4/17.
  */
-@CompileStatic
 abstract class VertxController<C extends VertxConfig> implements Handler<RoutingContext> {
 
     protected C config

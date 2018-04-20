@@ -1,4 +1,4 @@
-package controller
+package controller.Login
 
 import app.AppConfig
 import groovy.transform.CompileStatic
@@ -9,13 +9,15 @@ import io.vertx.core.json.JsonObject
 import io.vertx.ext.auth.jwt.JWTOptions
 import io.vertx.ext.web.RoutingContext
 import org.apache.commons.lang3.Validate
+import org.bson.Document
+import utils.Password
 import vertx.JsonResponse
 import vertx.VertxController
 
 
 @CompileStatic
 @InheritConstructors
-class GET_Token extends VertxController<AppConfig> {
+class GET_Login extends VertxController<AppConfig> {
     @Override
     void validate(RoutingContext context, HttpServerRequest request) {
         Validate.notBlank(context.request().getParam("username"), "username param must not be blank")
@@ -25,14 +27,21 @@ class GET_Token extends VertxController<AppConfig> {
     @Override
     void handle(RoutingContext context, HttpServerRequest request, HttpServerResponse response) {
         def username = request.getParam("username")
-        def password = request.getParam("password")
+        def hash_password = request.getParam("password")
 
-        //TODO: handler authorized
-        if (password != "test") {
-            throw new Exception("password incorrect")
+        def filter = [
+                username: username,
+                hash_password: Password.hash(hash_password)
+        ] as Document
+
+        def user = config.userCollection.findModels(filter).intoModels().join()[0]
+        if (!user) {
+            writeJson(response, 200, [message: "username or password not match"])
+            return
         }
 
-        def claims = ["username": username] as JsonObject
+
+        def claims = ["username": username, "_id": user.databaseId] as JsonObject
         def options = new JWTOptions(algorithm: "RS256", permissions: ["read-test", "write-test"], expiresInMinutes: 10L)
         def jwtToken = config.authProviderWithKeyStore.generateToken(claims, options)
 //        def jwtToken = config.authProviderWithPublicKey.generateToken(claims, options)
@@ -45,4 +54,7 @@ class GET_Token extends VertxController<AppConfig> {
         writeJson(response, 200, jsonResponse)
     }
 
+    private void verifyUser() {
+
+    }
 }
