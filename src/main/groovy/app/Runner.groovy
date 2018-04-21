@@ -16,6 +16,7 @@ class Runner {
     }
 
     static void main(String[] args) {
+        System.properties.load(new FileInputStream("conf/system.propeties"))
         def appConfigFile = new File(System.getProperty('user.dir'), 'conf/application.yml')
 
         def config = AppConfig.newInstance(appConfigFile)

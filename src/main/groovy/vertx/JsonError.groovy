@@ -1,5 +1,6 @@
 package vertx
 
+import io.vertx.core.json.Json
 import org.apache.commons.lang3.exception.ExceptionUtils
 
 /**
@@ -26,5 +27,18 @@ class JsonError {
         this.message = message
     }
 
+    JsonError message(String message) {
+        this.message = message
+        return this
+    }
 
+    JsonError rootCauseMessage(String rootCauseMessage) {
+        this.rootCauseMessage = rootCauseMessage
+        return this
+    }
+
+    JsonError detail(String detail) {
+        this.detail = detail
+        return this
+    }
 }

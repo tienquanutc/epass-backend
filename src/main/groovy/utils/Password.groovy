@@ -5,7 +5,11 @@ import org.apache.commons.codec.digest.DigestUtils
 import static org.apache.commons.lang3.Validate.*
 
 class Password {
-    private static String PASSWORD_PATTERN = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+=])(?=\\\\S+\$).{8,}"
+
+    public static final String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public static final String lower = upper.toLowerCase(Locale.ROOT);
+    public static final String digits = "0123456789";
+
 
     static String hash(String rawPassword) {
         return DigestUtils.md5Hex(rawPassword).toLowerCase();
@@ -24,12 +28,7 @@ class Password {
         return decrypt(encryptPassword, secretKey).equals(rawPassword)
     }
 
-    static class Validate {
-        static void isMD5Hash(String text, String message) {
-            notBlank(text, "password must be not null or whitespace")
-            if (text ==~ '^[a-f0-9]{32}$')
-                return
-            throw new RuntimeException(message)
-        }
+    static String generateRandomPassword() {
+        return UUID.randomUUID().toString().replaceAll('-', '')
     }
 }

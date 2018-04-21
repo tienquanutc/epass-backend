@@ -1,0 +1,10 @@
+#mail config
+mail.smtp.starttls.enable = true
+mail.smtp.port = 587
+mail.smtp.auth = true
+mail.smtp.host = smtp.gmail.com
+mail.from.username = tienquan.utc@gmail.com
+mail.from.password = Vuyen2503
+
+#callback-config
+resetpassword.broker.uri = http://localhost:8881

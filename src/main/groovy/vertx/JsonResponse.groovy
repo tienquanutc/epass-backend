@@ -18,6 +18,33 @@ class JsonResponse<T> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     T data
 
+    JsonResponse() {
+    }
+
+    JsonResponse(Object o) {
+        this.data = o
+    }
+
+
     JsonError error
 
+    JsonResponse<T> data(T data) {
+        this.data = data
+        return this
+    }
+
+    JsonResponse<T> statusCode(Integer statusCode) {
+        this.statusCode = statusCode
+        return this
+    }
+
+    JsonResponse<T> jsonMeta(JsonMeta meta) {
+        this.meta = meta
+        return this
+    }
+
+    JsonResponse<T> jsonMeta(JsonError error) {
+        this.error = error
+        return this
+    }
 }

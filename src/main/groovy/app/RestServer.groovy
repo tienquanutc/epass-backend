@@ -1,8 +1,10 @@
 package app
 
 import controller.*
+import controller.Login.POST_ResetPasswordCallback
 import controller.Login.GET_Login
 import controller.Login.POST_ChangePassword
+import controller.Login.POST_ResetPassword
 import controller.Login.POST_Register
 import groovy.util.logging.Slf4j
 import io.vertx.core.http.HttpMethod
@@ -67,6 +69,9 @@ class RestServer extends VertxServer<AppConfig> {
         get("/login") >> GET_Login
         post("/register") >> POST_Register
         post("/v1/change_password") >> POST_ChangePassword
+        post("/reset-password") >> POST_ResetPassword
+        post("/reset-password-callback") >> POST_ResetPasswordCallback
+        get("/v1/secret") >> GET_Secret
 
         route('/health.json').handler(new HEALTH_CHECK(config))
     }

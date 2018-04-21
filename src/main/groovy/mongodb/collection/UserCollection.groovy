@@ -21,8 +21,22 @@ class UserCollection extends ModelCollection<User> {
         return this.insertOneModel(user).join()
     }
 
-    boolean isExist(String username) {
+    boolean isExistUsername(String username) {
         this.find([username: username] as Document).projection([_id: 1] as Document).intoDocuments().join()
+    }
+
+    boolean isExistEmail(String email) {
+        this.find([email: email] as Document).projection([_id: 1] as Document).intoDocuments().join()
+    }
+
+    void verify(String username, String email) {
+        def filter = ['$or': [[username: username], [email: email]]] as Document
+        def result = this.find(filter).projection([username: 1, email: 1] as Document).intoDocuments().join()
+        if (result) {
+            if (result.first().username == username)
+                throw new RuntimeException("username already taken!")
+            throw new RuntimeException("email already taken!")
+        }
     }
 
     User changePassword(String databaseId, String oldPassword, String newPassword) {
@@ -30,7 +44,14 @@ class UserCollection extends ModelCollection<User> {
         User user = this.findModel(id).first().join()
         if (user.hashPassword != oldPassword)
             throw new RuntimeException("old password incorrect")
-        user.hashPassword(newPassword).salt(newPassword)
+        user.hashPassword(newPassword).salt(newPassword).updatedAt(new Date())
+        return this.update(user)
+    }
+
+    User changePassword(String databaseId, String newPassword) {
+        def id = new ObjectId(databaseId)
+        User user = this.findModel(id).first().join()
+        user.hashPassword(newPassword).salt(newPassword).updatedAt(new Date())
         return this.update(user)
     }
 
@@ -57,5 +78,15 @@ class UserCollection extends ModelCollection<User> {
 
 
         return this.findOneAndUpdateModel(filter, update).join()
+    }
+
+    User findByUsername(String username) {
+        def filter = [username: username] as Document
+        return this.findModels(filter).intoModels().join()[0]
+    }
+
+    User findById(String _id) {
+        def filter = [_id: new ObjectId(_id)] as Document
+        return this.findModels(filter).intoModels().join()[0]
     }
 }

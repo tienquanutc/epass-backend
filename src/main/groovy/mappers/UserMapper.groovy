@@ -15,6 +15,7 @@ class UserMapper extends ModelMapper<User> {
                 .username(document.username as String)
                 .hashPassword(document.hash_password as String)
                 .salt(document.salt as String)
+                .email(document.email as String)
                 .createdAt(document.created_at as Date)
                 .updatedAt(document.updated_at as Date)
     }
@@ -33,6 +34,7 @@ class UserMapper extends ModelMapper<User> {
                 username     : model.username,
                 hash_password: model.hashPassword,
                 salt         : model.salt,
+                email        : model.email,
                 created_at   : model.createdAt,
                 updated_at   : model.updatedAt
         ])

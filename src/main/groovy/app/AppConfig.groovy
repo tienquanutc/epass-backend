@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import groovy.util.logging.Slf4j
+import io.jsonwebtoken.Jwts
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.auth.jwt.JWTAuth
 import mongodb.collection.UserCollection
@@ -33,7 +34,6 @@ class AppConfig extends VertxConfig {
 
     @JsonProperty("user.mongodb.uri")
     UserCollection userCollection
-
 
     static AppConfig newInstance(File appConfigFile) throws IOException {
         Validate.isTrue(appConfigFile.exists(), "AppConfigFile not exists: ${appConfigFile.getAbsolutePath()}")

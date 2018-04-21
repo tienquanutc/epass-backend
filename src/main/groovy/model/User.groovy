@@ -6,6 +6,7 @@ class User {
     String databaseId
     String username
     String hashPassword
+    String email
     String salt
     Date createdAt
     Date updatedAt
@@ -37,6 +38,11 @@ class User {
 
     User updatedAt(Date updatedAt) {
         this.updatedAt = updatedAt
+        return this
+    }
+
+    User email(String email) {
+        this.email = email
         return this
     }
 }
