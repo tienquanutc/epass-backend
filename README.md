@@ -1,11 +1,11 @@
 # epass-backend
 
 # Config
-Database config
+Database config:
 ```sh
 conf/application.yaml
 ```
-System config
+System config: mail client, resetpassword.broker.uri, etc....
 ```sh
 conf/system.propeties
 ```
