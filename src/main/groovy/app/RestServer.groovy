@@ -68,7 +68,7 @@ class RestServer extends VertxServer<AppConfig> {
 
         get("/login") >> GET_Login
         post("/register") >> POST_Register
-        post("/v1/change_password") >> POST_ChangePassword
+        post("/v1/change-password") >> POST_ChangePassword
         post("/reset-password") >> POST_ResetPassword
         post("/reset-password-callback") >> POST_ResetPasswordCallback
         get("/v1/secret") >> GET_Secret
