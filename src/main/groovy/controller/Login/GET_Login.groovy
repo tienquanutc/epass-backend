@@ -13,6 +13,7 @@ import org.apache.commons.lang3.Validate
 import org.bson.Document
 import utils.EPassValidate
 import utils.Password
+import vertx.JsonError
 import vertx.JsonResponse
 import vertx.VertxController
 
@@ -39,7 +40,7 @@ class GET_Login extends VertxController<AppConfig> {
 
         def user = config.userCollection.findModels(filter).intoModels().join()[0]
         if (!user) {
-            writeJson(response, 200, [message: "username or password not match"])
+            writeJson(response, 200, new JsonResponse().data([message: "username or password not match"]))
             return
         }
 
