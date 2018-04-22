@@ -56,17 +56,17 @@ class RestServer extends VertxServer<AppConfig> {
             setCachingEnabled(false)
         })
 
-        route("/v1/*").handler(JWTAuthHandler.create(config.authProviderWithPublicKey))
+        route("/api/v1/*").handler(JWTAuthHandler.create(config.authProviderWithPublicKey))
 
-        route("/v1/*").handler(CorsHandler.create("*").with {
+        route("/api/v1/*").handler(CorsHandler.create("*").with {
             allowedMethods([OPTIONS, GET, POST, PUT, DELETE, PATCH] as Set<HttpMethod>)
             allowCredentials(true)
             allowedHeaders(['Authorization', 'Access-Control-Allow-Method', 'Access-Control-Allow-Headers', 'Content-Type'] as Set)
         })
 
-        get("/login") >> GET_Login
-        post("/register") >> POST_Register
-        post("/v1/change_password") >> POST_ChangePassword
+        get("/api/login") >> GET_Login
+        post("/api/register") >> POST_Register
+        post("/api/v1/change_password") >> POST_ChangePassword
 
         route('/health.json').handler(new HEALTH_CHECK(config))
     }
